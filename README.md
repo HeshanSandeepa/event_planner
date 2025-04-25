@@ -16,9 +16,9 @@ Flutter, Dart, Bloc, Dio, GetIt, FirebaseAuth
 
 ## known issues or limitations
 
-1. Pagination has been added on lists.
+1. Pagination hasn't been added on lists.
 2. Re-creational bugs on logout, profile edit.
-3. Address component doesn't work as intended.
+3. Profile -> Address component doesn't work as intended.
    (Firebase Auth used instead FireStore for profile data persistence)
 4. FCM hasn't been integrated.
 5. Simple UI.
