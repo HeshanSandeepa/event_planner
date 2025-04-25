@@ -1,3 +1,4 @@
+import 'package:event_planner/src/shared/widgets/notice_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:event_planner/src/core/utils/validator.dart';
@@ -49,15 +50,12 @@ class _LoginPageState extends State<LoginPage> {
         listener: (context, state) {
           if (state is Authenticated) {
             _pushHome(context);
-
-            // Navigate to home screen
-          } else if (state is AuthFailure) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('${state.message}')),
-            );
           }
         },
         builder: (context, state) {
+          if (state is AuthFailure) {
+            return NoticeView(notice: state.message);
+          }
           return Padding(
             padding: const EdgeInsets.all(16.0),
             child: Form(

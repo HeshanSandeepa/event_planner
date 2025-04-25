@@ -120,7 +120,7 @@ final class EventTheme {
           ),
         ),
       ),
-      iconTheme: const IconThemeData(size: 24.0),
+      iconTheme: const IconThemeData(size: 44.0),
       inputDecorationTheme: InputDecorationTheme(
         contentPadding: const EdgeInsets.all(8),
         filled: true,

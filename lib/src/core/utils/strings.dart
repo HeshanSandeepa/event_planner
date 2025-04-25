@@ -2,6 +2,7 @@ abstract final class Strings {
   static const title = 'Event Planner';
   static const next = "Next";
   static const back = "Back";
+  static const logOut = "LogOut";
 
   // login
   static const hintEmail = 'Email';
@@ -28,7 +29,6 @@ abstract final class Strings {
   static const hintAddress = 'Address';
 
   // home
-
   static const tabHome = "Home";
   static const tabProfile = "Profile";
   static const eventNameHolder = "Event Name";
@@ -42,6 +42,8 @@ abstract final class Strings {
   // comments
   static const postComments = "Post Comments";
 
+  // update
+  static const save = 'Save';
 
   //errors
   static const invalidEmail = "Invalid Email";

@@ -52,15 +52,16 @@ class FirebaseDataSourceImpl implements FirebaseDataSource {
   Future<UserModel?> getCurrentUser() async {
     try {
       final user = _firebaseAuth.currentUser;
+
       return user != null
           ? UserModel(
-            uid: user.uid,
-            email: user.email,
-            firstName: user.displayName,
-            lastName: user.displayName,
-            photoUrl: user.photoURL,
-            contactNumber: user.phoneNumber,
-          )
+              uid: user.uid,
+              email: user.email,
+              firstName: user.displayName,
+              lastName: '',
+              photoUrl: user.photoURL,
+              contactNumber: user.phoneNumber,
+            )
           : null;
     } catch (e) {
       rethrow;

@@ -2,9 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:event_planner/src/core/router/app_route_enum.dart';
 import 'package:event_planner/src/features/auth/domain/entities/user.dart';
 import 'package:event_planner/src/features/auth/presentation/bloc/authenticate_bloc.dart';
+
+import '../../core/router/app_route_enum.dart';
+import '../../core/utils/strings.dart';
 
 class DrawerView extends StatefulWidget {
   const DrawerView({super.key});
@@ -29,6 +31,17 @@ class _DrawerViewState extends State<DrawerView> {
     BlocProvider.of<AuthenticateBloc>(context).add(GetCurrentUserRequested());
   }
 
+  _logOut() {
+    BlocProvider.of<AuthenticateBloc>(
+      context,
+    ).add(SignOutRequested());
+  }
+
+  _pushLogin(BuildContext context) {
+    Navigator.pushNamedAndRemoveUntil(
+        context, AppRouteEnum.loginPage.name, (Route<dynamic> route) => false);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -39,6 +52,10 @@ class _DrawerViewState extends State<DrawerView> {
           builder: (context, state) {
             if (state is Authenticated) {
               userEntity = state.user;
+            }
+
+            if (state is SignOutRequested) {
+              _pushLogin(context);
             }
             return Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -75,7 +92,7 @@ class _DrawerViewState extends State<DrawerView> {
                           Text(
                             userEntity == null
                                 ? ''
-                                : ' ${userEntity!.lastName}',
+                                : ' ${userEntity!.firstName}',
                             textAlign: TextAlign.start,
                             overflow: TextOverflow.fade,
                             maxLines: 1,
@@ -126,11 +143,9 @@ class _DrawerViewState extends State<DrawerView> {
                         ),
                       ),
                     ),
-                    title: const Text('LogOut'),
+                    title: const Text(Strings.logOut),
                     onTap: () {
-                      BlocProvider.of<AuthenticateBloc>(
-                        context,
-                      ).add(SignOutRequested());
+                      _logOut();
                     },
                   ),
                 ),

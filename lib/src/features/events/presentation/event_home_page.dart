@@ -55,8 +55,7 @@ class _EventHomePageState extends State<EventHomePage> {
               },
               builder: (context, state) {
                 if (state is PhotoLoading) {
-                  return const Expanded(
-                      child: LoadingView(strokeColor: Colors.black));
+                  return const Center(child: LoadingView(strokeColor: Colors.black));
                 }
                 if (state is PhotoError) {
                   return NoticeView(notice: state.message);

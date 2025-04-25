@@ -25,7 +25,7 @@ final class Validator {
   }
 
   static isValidPhoneNumber(String phoneNumber) {
-    final phoneRegExp = RegExp(r'^\+947\d{9}$');
+    final phoneRegExp = RegExp(r'^947\d{8,9}$');
     return phoneRegExp.hasMatch(phoneNumber);
   }
 }

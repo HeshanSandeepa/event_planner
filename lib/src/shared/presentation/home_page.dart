@@ -15,11 +15,18 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  int _selectedIndex = 0;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 
   @override
@@ -34,6 +41,8 @@ class _HomePageState extends State<HomePage>
         children: const [EventHomePage(), ProfilePage()],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        onTap: _onItemTapped,
+        currentIndex: _selectedIndex,
         items: const [
           BottomNavigationBarItem(
               icon: Icon(Icons.home), label: Strings.tabHome),

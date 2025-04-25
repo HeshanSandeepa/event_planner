@@ -6,7 +6,6 @@ import 'package:event_planner/src/features/auth/presentation/bloc/profile_bloc.d
 import '../../../core/router/app_route_enum.dart';
 import '../../../core/utils/strings.dart';
 import '../../../core/utils/validator.dart';
-import 'bloc/authenticate_bloc.dart';
 
 class InfoPage extends StatefulWidget {
   const InfoPage({super.key});
@@ -27,6 +26,10 @@ class _InfoPageState extends State<InfoPage> {
   }
 
   _updateInfo() {
+    FocusManager.instance.primaryFocus?.unfocus();
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
     BlocProvider.of<ProfileBloc>(context).add(
       UpdateProfile(
         firstName: _firstNameController.text.trim(),
@@ -104,7 +107,7 @@ class _InfoPageState extends State<InfoPage> {
                   TextFormField(
                     controller: _phoneNumberController,
                     keyboardType: TextInputType.phone,
-                    inputFormatters: [LengthLimitingTextInputFormatter(10)],
+                    inputFormatters: [LengthLimitingTextInputFormatter(12)],
                     decoration: const InputDecoration(labelText: Strings.hintPhone),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
