@@ -4,6 +4,7 @@ import 'package:event_planner/src/core/utils/validator.dart';
 
 import '../../../core/router/app_route_enum.dart';
 import '../../../core/utils/strings.dart';
+import '../../../shared/widgets/loading_view.dart';
 import 'bloc/authenticate_bloc.dart';
 
 class LoginPage extends StatefulWidget {
@@ -18,8 +19,14 @@ class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  _pushSignUpPage() {
-    Navigator.pushNamed(context, AppRouteEnum.signUpPage.name);
+  _pushSignUp() {
+    Navigator.pushNamedAndRemoveUntil(
+        context, AppRouteEnum.signUpPage.name, (Route<dynamic> route) => false);
+  }
+
+  _pushHome(BuildContext context) {
+    Navigator.pushNamedAndRemoveUntil(
+        context, AppRouteEnum.homePage.name, (Route<dynamic> route) => false);
   }
 
   _login() {
@@ -38,38 +45,49 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Login')),
       body: BlocConsumer<AuthenticateBloc, AuthenticateState>(
         listener: (context, state) {
           if (state is Authenticated) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('Login successful! User ID: ${state.user.uid}'),
-              ),
-            );
+            _pushHome(context);
+
             // Navigate to home screen
           } else if (state is AuthFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Login failed: ${state.message}')),
+              SnackBar(content: Text('${state.message}')),
             );
           }
         },
         builder: (context, state) {
-          if (state is AuthLoading) {
-            return Center(child: CircularProgressIndicator());
-          }
           return Padding(
             padding: const EdgeInsets.all(16.0),
             child: Form(
               key: _formKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  Text(
+                    Strings.welcome,
+                    style: Theme.of(context).textTheme.headlineLarge,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    Strings.welcomeTwo,
+                    style: Theme.of(context).textTheme.headlineSmall,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 32),
                   TextFormField(
                     controller: _emailController,
                     autofocus: true,
                     keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(labelText: 'Email'),
+                    decoration: const InputDecoration(
+                      labelText: Strings.hintEmail,
+                      icon: Icon(
+                        Icons.mail,
+                      ),
+                    ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return Strings.invalidEmail;
@@ -80,11 +98,16 @@ class _LoginPageState extends State<LoginPage> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   TextFormField(
                     controller: _passwordController,
                     obscureText: true,
-                    decoration: InputDecoration(labelText: 'Password'),
+                    decoration: const InputDecoration(
+                      labelText: Strings.hintPassword,
+                      icon: Icon(
+                        Icons.password,
+                      ),
+                    ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return Strings.invalidPassword;
@@ -95,19 +118,20 @@ class _LoginPageState extends State<LoginPage> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 24),
+                  const SizedBox(height: 24),
+                  if (state is AuthLoading) const Center(child: LoadingView()),
                   ElevatedButton(
                     onPressed: () {
                       _login();
                     },
-                    child: Text('Login'),
+                    child: const Text(Strings.login),
                   ),
-                  SizedBox(height: 16),
-                  TextButton(
+                  const SizedBox(height: 16),
+                  ElevatedButton(
                     onPressed: () {
-                      _pushSignUpPage();
+                      _pushSignUp();
                     },
-                    child: Text(Strings.register),
+                    child: const Text(Strings.signUp),
                   ),
                 ],
               ),

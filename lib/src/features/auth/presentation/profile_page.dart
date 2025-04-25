@@ -6,7 +6,6 @@ import 'package:event_planner/src/features/auth/presentation/bloc/profile_bloc.d
 
 import '../../../core/router/app_route_enum.dart';
 import '../../../shared/camera/presentation/camera_bloc.dart';
-import 'bloc/authenticate_bloc.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -67,10 +66,6 @@ class _ProfilePageState extends State<ProfilePage> {
             _addressController.text = user.contactNumber ?? '';
           }
 
-          if (state is AuthLoading) {
-            return Center(child: CircularProgressIndicator());
-          }
-
           return Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -82,56 +77,55 @@ class _ProfilePageState extends State<ProfilePage> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   clipBehavior: Clip.antiAlias,
-                  child:
-                      imagePath == null
-                          ? Center(
-                            child: Container(
+                  child: imagePath == null
+                      ? Center(
+                          child: Container(
+                            width: 200,
+                            height: 200,
+                            decoration: BoxDecoration(
+                              color: Colors.red.shade100,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                        )
+                      : Stack(
+                          children: [
+                            Image.file(
+                              File(imagePath!),
                               width: 200,
                               height: 200,
-                              decoration: BoxDecoration(
-                                color: Colors.red.shade100,
-                                shape: BoxShape.circle,
-                              ),
+                              fit: BoxFit.cover,
                             ),
-                          )
-                          : Stack(
-                            children: [
-                              Image.file(
-                                File(imagePath!),
-                                width: 200,
-                                height: 200,
-                                fit: BoxFit.cover,
+                            if (editEnabled)
+                              IconButton(
+                                onPressed: () {
+                                  _takePicture();
+                                },
+                                icon: const Icon(Icons.camera_alt_outlined),
                               ),
-                              if (editEnabled)
-                                IconButton(
-                                  onPressed: () {
-                                    _takePicture();
-                                  },
-                                  icon: Icon(Icons.camera_alt_outlined),
-                                ),
-                            ],
-                          ),
+                          ],
+                        ),
                 ),
                 TextField(
                   controller: _firstNameController,
-                  decoration: InputDecoration(labelText: 'First Name'),
+                  decoration: const InputDecoration(labelText: 'First Name'),
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 TextField(
                   controller: _lastNameController,
-                  decoration: InputDecoration(labelText: 'Last Name'),
+                  decoration: const InputDecoration(labelText: 'Last Name'),
                 ),
-                SizedBox(height: 24),
+                const SizedBox(height: 24),
                 TextField(
                   controller: _phoneNumberController,
-                  decoration: InputDecoration(labelText: 'Phone Number'),
+                  decoration: const InputDecoration(labelText: 'Phone Number'),
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 TextField(
                   controller: _addressController,
-                  decoration: InputDecoration(labelText: 'Address'),
+                  decoration: const InputDecoration(labelText: 'Address'),
                 ),
-                SizedBox(height: 24),
+                const SizedBox(height: 24),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -140,7 +134,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        child: Text('Back'),
+                        child: const Text('Back'),
                       ),
                     ),
                     Expanded(

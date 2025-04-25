@@ -22,11 +22,11 @@ class AuthenticateBloc extends Bloc<AuthenticateEvent, AuthenticateState> {
     required RegisterUseCase registerUseCase,
     required GetCurrentUserUseCase getCurrentUserUseCase,
     required SignOutUseCase signOutUseCase,
-  }) : _loginUseCase = loginUseCase,
-       _registerUseCase = registerUseCase,
-       _getCurrentUserUseCase = getCurrentUserUseCase,
-       _signOutUseCase = signOutUseCase,
-       super(AuthInitial()) {
+  })  : _loginUseCase = loginUseCase,
+        _registerUseCase = registerUseCase,
+        _getCurrentUserUseCase = getCurrentUserUseCase,
+        _signOutUseCase = signOutUseCase,
+        super(AuthInitial()) {
     on<LoginRequested>(_onLoginRequested);
     on<RegisterRequested>(_onRegisterRequested);
     on<GetCurrentUserRequested>(_onGetCurrentUserRequested);
@@ -37,7 +37,6 @@ class AuthenticateBloc extends Bloc<AuthenticateEvent, AuthenticateState> {
     LoginRequested event,
     Emitter<AuthenticateState> emit,
   ) async {
-    emit(AuthLoading());
     try {
       final user = await _loginUseCase.execute(event.email, event.password);
       if (user != null) {
@@ -62,11 +61,7 @@ class AuthenticateBloc extends Bloc<AuthenticateEvent, AuthenticateState> {
     try {
       final user = await _registerUseCase.execute(event.email, event.password);
       if (user != null) {
-        if (user.photoUrl != null) {
-          emit(Authenticated(user: user));
-        } else {
-          emit(InitialAuthenticated(user: user));
-        }
+        add(LoginRequested(email: event.email, password: event.password));
       } else {
         emit(Unauthenticated());
       }
@@ -79,15 +74,10 @@ class AuthenticateBloc extends Bloc<AuthenticateEvent, AuthenticateState> {
     GetCurrentUserRequested event,
     Emitter<AuthenticateState> emit,
   ) async {
-    emit(AuthLoading());
     try {
       final user = await _getCurrentUserUseCase.execute();
       if (user != null) {
-        if (user.photoUrl != null) {
-          emit(Authenticated(user: user));
-        } else {
-          emit(InitialAuthenticated(user: user));
-        }
+        emit(Authenticated(user: user));
       } else {
         emit(Unauthenticated());
       }
@@ -100,7 +90,6 @@ class AuthenticateBloc extends Bloc<AuthenticateEvent, AuthenticateState> {
     SignOutRequested event,
     Emitter<AuthenticateState> emit,
   ) async {
-    emit(AuthLoading());
     try {
       await _signOutUseCase.execute();
       emit(Unauthenticated());

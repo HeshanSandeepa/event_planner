@@ -1,3 +1,4 @@
+import 'package:event_planner/src/shared/camera/data/camera_output_repository_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -51,8 +52,8 @@ List<SingleChildWidget> createBlocProviders(BuildContext context) {
       create: (_) => FirebaseDataSourceImpl(FirebaseAuth.instance),
     ),
     Provider<AuthRepository>(
-      create:
-          (context) => AuthRepositoryImpl(context.read<FirebaseDataSource>()),
+      create: (context) =>
+          AuthRepositoryImpl(context.read<FirebaseDataSource>()),
     ),
     Provider<LoginUseCase>(
       create: (context) => LoginUseCase(context.read<AuthRepository>()),
@@ -61,8 +62,8 @@ List<SingleChildWidget> createBlocProviders(BuildContext context) {
       create: (context) => RegisterUseCase(context.read<AuthRepository>()),
     ),
     Provider<GetCurrentUserUseCase>(
-      create:
-          (context) => GetCurrentUserUseCase(context.read<AuthRepository>()),
+      create: (context) =>
+          GetCurrentUserUseCase(context.read<AuthRepository>()),
     ),
     Provider<SignOutUseCase>(
       create: (context) => SignOutUseCase(context.read<AuthRepository>()),
@@ -71,28 +72,24 @@ List<SingleChildWidget> createBlocProviders(BuildContext context) {
       create: (_) => PhotoDataSourceImpl(dioClient: getIt<DioClient>()),
     ),
     Provider<PhotoRepository>(
-      create:
-          (context) => PhotoRepositoryImpl(
+      create: (context) => PhotoRepositoryImpl(
         remoteDataSource: context.read<PhotoDataSource>(),
       ),
     ),
     Provider<GetPhotosUseCase>(
-      create:
-          (context) =>
+      create: (context) =>
           GetPhotosUseCase(repository: context.read<PhotoRepository>()),
     ),
     Provider<OrganiserDataSource>(
       create: (_) => OrganiserDataSourceImpl(dioClient: getIt<DioClient>()),
     ),
     Provider<OrganiserRepository>(
-      create:
-          (context) => OrganiserRepositoryImpl(
+      create: (context) => OrganiserRepositoryImpl(
         remoteDataSource: context.read<OrganiserDataSource>(),
       ),
     ),
     Provider<GetOrganiserUseCase>(
-      create:
-          (context) => GetOrganiserUseCase(
+      create: (context) => GetOrganiserUseCase(
         repository: context.read<OrganiserRepository>(),
       ),
     ),
@@ -100,69 +97,69 @@ List<SingleChildWidget> createBlocProviders(BuildContext context) {
       create: (_) => PostDataSourceImpl(dioClient: getIt<DioClient>()),
     ),
     Provider<PostRepository>(
-      create:
-          (context) => PostRepositoryImpl(
+      create: (context) => PostRepositoryImpl(
         remoteDataSource: context.read<PostDataSource>(),
       ),
     ),
     Provider<GetPostUseCase>(
-      create:
-          (context) =>
+      create: (context) =>
           GetPostUseCase(repository: context.read<PostRepository>()),
     ),
     Provider<CommentDataSource>(
       create: (_) => CommentDataSourceImpl(dioClient: getIt<DioClient>()),
     ),
     Provider<CommentRepository>(
-      create:
-          (context) => CommentRepositoryImpl(
+      create: (context) => CommentRepositoryImpl(
         remoteDataSource: context.read<CommentDataSource>(),
       ),
     ),
-
     BlocProvider<AuthenticateBloc>(
-      create:
-          (context) => AuthenticateBloc(
-            loginUseCase: context.read<LoginUseCase>(),
-            registerUseCase: context.read<RegisterUseCase>(),
-            getCurrentUserUseCase: context.read<GetCurrentUserUseCase>(),
-            signOutUseCase: context.read<SignOutUseCase>(),
-          )..add(GetCurrentUserRequested()),
+      create: (context) => AuthenticateBloc(
+        loginUseCase: context.read<LoginUseCase>(),
+        registerUseCase: context.read<RegisterUseCase>(),
+        getCurrentUserUseCase: context.read<GetCurrentUserUseCase>(),
+        signOutUseCase: context.read<SignOutUseCase>(),
+      )..add(GetCurrentUserRequested()),
     ),
     BlocProvider<PhotoBloc>(
-      create:
-          (context) =>
-              PhotoBloc(getPhotosUseCase: context.read<GetPhotosUseCase>()),
+      create: (context) =>
+          PhotoBloc(getPhotosUseCase: context.read<GetPhotosUseCase>()),
     ),
     BlocProvider<OrganiserBloc>(
-      create:
-          (context) => OrganiserBloc(
-            getOrganiserUseCase: context.read<GetOrganiserUseCase>(),
-          ),
+      create: (context) => OrganiserBloc(
+        getOrganiserUseCase: context.read<GetOrganiserUseCase>(),
+      ),
     ),
     BlocProvider<PostBloc>(
-      create:
-          (context) => PostBloc(getPostUseCase: context.read<GetPostUseCase>()),
+      create: (context) =>
+          PostBloc(getPostUseCase: context.read<GetPostUseCase>()),
     ),
     BlocProvider<CommentBloc>(
-      create:
-          (context) =>
-              CommentBloc(getCommentUseCase: context.read<GetCommentUseCase>()),
+      create: (context) =>
+          CommentBloc(getCommentUseCase: context.read<GetCommentUseCase>()),
+    ),
+    Provider<UpdateProfileUseCase>(
+      create: (context) =>
+          UpdateProfileUseCase(authRepository: context.read<AuthRepository>()),
+    ),
+    Provider<UpdateProfileImageUseCase>(
+      create: (context) =>
+          UpdateProfileImageUseCase(authRepository: context.read<AuthRepository>()),
     ),
     BlocProvider<ProfileBloc>(
-      create:
-          (context) => ProfileBloc(
-            updateProfileUseCase: context.read<UpdateProfileUseCase>(),
-            updateProfileImageUseCase:
-                context.read<UpdateProfileImageUseCase>(),
-            getCurrentUserUseCase: context.read<GetCurrentUserUseCase>(),
-          ),
+      create: (context) => ProfileBloc(
+        updateProfileUseCase: context.read<UpdateProfileUseCase>(),
+        updateProfileImageUseCase: context.read<UpdateProfileImageUseCase>(),
+        getCurrentUserUseCase: context.read<GetCurrentUserUseCase>(),
+      ),
+    ),
+    Provider<CameraOutputRepository>(
+      create: (context) => CameraOutputRepositoryImpl(),
     ),
     BlocProvider<CameraBloc>(
-      create:
-          (context) => CameraBloc(
-            cameraOutputRepository: context.read<CameraOutputRepository>(),
-          ),
+      create: (context) => CameraBloc(
+        cameraOutputRepository: context.read<CameraOutputRepository>(),
+      ),
     ),
   ];
 }

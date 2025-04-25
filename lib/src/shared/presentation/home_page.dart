@@ -1,6 +1,7 @@
+import 'package:event_planner/src/shared/widgets/loading_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:event_planner/drawer_view.dart';
+import 'package:event_planner/src/shared/widgets/drawer_view.dart';
 import 'package:event_planner/src/features/events/presentation/bloc/organiser_bloc.dart';
 import 'package:event_planner/src/features/events/presentation/bloc/photo_bloc.dart';
 import 'package:event_planner/src/features/events/presentation/bloc/post_bloc.dart';
@@ -8,8 +9,8 @@ import 'package:event_planner/src/features/events/presentation/widgets/event_hor
 import 'package:event_planner/src/features/events/presentation/widgets/event_organiser_view.dart';
 import 'package:event_planner/src/features/events/presentation/widgets/event_post_count_view.dart';
 import 'package:event_planner/src/features/events/presentation/widgets/event_slider_view.dart';
-import 'package:event_planner/src/shared/presentation/widgets/loading_view.dart';
-import 'package:event_planner/src/shared/presentation/widgets/notice_view.dart';
+
+import 'package:event_planner/src/shared/widgets/notice_view.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -43,8 +44,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Remote Config')),
-      drawer: DrawerView(),
+      appBar: AppBar(title: const Text('Remote Config')),
+      drawer: const DrawerView(),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,

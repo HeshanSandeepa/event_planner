@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:event_planner/home_page.dart';
+import 'package:event_planner/src/shared/presentation/home_page.dart';
 import 'package:event_planner/src/features/auth/presentation/info_page.dart';
 import 'package:event_planner/src/features/auth/presentation/login_page.dart';
 import 'package:event_planner/src/features/auth/presentation/profile_page.dart';

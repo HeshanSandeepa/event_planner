@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:event_planner/src/shared/presentation/widgets/loading_view.dart';
 
+import '../../../core/router/app_route_enum.dart';
 import '../../../core/utils/strings.dart';
 import '../../../core/utils/validator.dart';
+import '../../../shared/widgets/loading_view.dart';
 import 'bloc/authenticate_bloc.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -32,43 +33,52 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
+  _pushWelcome() {
+    Navigator.pushNamedAndRemoveUntil(context, AppRouteEnum.welcomePage.name,
+        (Route<dynamic> route) => false);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Registers')),
       body: BlocConsumer<AuthenticateBloc, AuthenticateState>(
         listener: (context, state) {
-          if (state is Authenticated) {
+          if (state is InitialAuthenticated) {
+            _pushWelcome();
+          }
+          if (state is AuthFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  'Registration successful! User ID: ${state.user.uid}',
-                ),
-              ),
-            );
-            // Navigate to home screen
-          } else if (state is AuthFailure) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Registration failed: ${state.message}')),
+              SnackBar(content: Text(state.message)),
             );
           }
         },
         builder: (context, state) {
-          if (state is AuthLoading) {
-            return Center(child: LoadingView());
-          }
           return Padding(
             padding: const EdgeInsets.all(16.0),
             child: Form(
               key: _formKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  Text(
+                    Strings.welcome,
+                    style: Theme.of(context).textTheme.headlineLarge,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    Strings.welcomeTwo,
+                    style: Theme.of(context).textTheme.headlineSmall,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 32),
                   TextFormField(
                     controller: _emailController,
                     autofocus: true,
                     keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(labelText: 'Email'),
+                    decoration:
+                        const InputDecoration(labelText: Strings.hintEmail),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return Strings.invalidEmail;
@@ -79,11 +89,12 @@ class _SignUpPageState extends State<SignUpPage> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   TextFormField(
                     controller: _passwordController,
                     obscureText: true,
-                    decoration: InputDecoration(labelText: 'Password'),
+                    decoration:
+                        const InputDecoration(labelText: Strings.hintPassword),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return Strings.invalidPassword;
@@ -94,11 +105,12 @@ class _SignUpPageState extends State<SignUpPage> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   TextFormField(
                     controller: _repeatPasswordController,
                     obscureText: true,
-                    decoration: InputDecoration(labelText: 'Repeat Password'),
+                    decoration: const InputDecoration(
+                        labelText: Strings.hintConfirmPassword),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return Strings.invalidPassword;
@@ -112,20 +124,21 @@ class _SignUpPageState extends State<SignUpPage> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 24),
+                  const SizedBox(height: 24),
+                  if (state is AuthLoading) const Center(child: LoadingView()),
                   ElevatedButton(
                     onPressed: () {
                       _singUp();
                     },
-                    child: Text('Register'),
+                    child: const Text(Strings.signUp),
                   ),
-                  SizedBox(height: 16),
-                  TextButton(
+                  const SizedBox(height: 16),
+                  ElevatedButton(
                     onPressed: () {
                       // Navigate back to login screen
                       Navigator.pop(context);
                     },
-                    child: Text('Already have an account? Login'),
+                    child: const Text(Strings.login),
                   ),
                 ],
               ),

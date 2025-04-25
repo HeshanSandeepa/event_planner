@@ -40,7 +40,7 @@ class _InfoPageState extends State<InfoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Profile')),
+      appBar: AppBar(title: const Text('Profile')),
       body: BlocConsumer<ProfileBloc, ProfileState>(
         listener: (context, state) {
           if (state is ProfileUpdated) {
@@ -48,9 +48,6 @@ class _InfoPageState extends State<InfoPage> {
           } else if (state is ProfileFailure) {}
         },
         builder: (context, state) {
-          if (state is AuthLoading) {
-            return Center(child: CircularProgressIndicator());
-          }
           return Padding(
             padding: const EdgeInsets.all(16.0),
             child: Form(
@@ -59,11 +56,23 @@ class _InfoPageState extends State<InfoPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  Text(
+                    Strings.infoTitle,
+                    style: Theme.of(context).textTheme.headlineSmall,
+                    textAlign: TextAlign.left,
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    Strings.infoSubTitle,
+                    style: Theme.of(context).textTheme.bodySmall,
+                    textAlign: TextAlign.left,
+                  ),
+                  const SizedBox(height: 32),
                   TextFormField(
                     autofocus: true,
                     controller: _firstNameController,
                     keyboardType: TextInputType.text,
-                    decoration: InputDecoration(labelText: 'First Name'),
+                    decoration: const InputDecoration(labelText: Strings.hintFirstName),
                     inputFormatters: [LengthLimitingTextInputFormatter(10)],
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -75,7 +84,7 @@ class _InfoPageState extends State<InfoPage> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   TextFormField(
                     controller: _lastNameController,
                     keyboardType: TextInputType.text,
@@ -89,14 +98,14 @@ class _InfoPageState extends State<InfoPage> {
                       }
                       return null;
                     },
-                    decoration: InputDecoration(labelText: 'Last Name'),
+                    decoration: const InputDecoration(labelText: Strings.hintLastName),
                   ),
-                  SizedBox(height: 24),
+                  const SizedBox(height: 24),
                   TextFormField(
                     controller: _phoneNumberController,
                     keyboardType: TextInputType.phone,
                     inputFormatters: [LengthLimitingTextInputFormatter(10)],
-                    decoration: InputDecoration(labelText: 'Phone Number'),
+                    decoration: const InputDecoration(labelText: Strings.hintPhone),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return Strings.invalidPhone;
@@ -107,11 +116,11 @@ class _InfoPageState extends State<InfoPage> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   TextFormField(
                     controller: _addressController,
                     keyboardType: TextInputType.text,
-                    decoration: InputDecoration(labelText: 'Address'),
+                    decoration: const InputDecoration(labelText: Strings.hintAddress),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return Strings.invalidText;
@@ -119,7 +128,7 @@ class _InfoPageState extends State<InfoPage> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 24),
+                  const SizedBox(height: 24),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
@@ -129,15 +138,16 @@ class _InfoPageState extends State<InfoPage> {
                             // Navigate to register screen
                             Navigator.pop(context);
                           },
-                          child: Text('Back'),
+                          child: const Text(Strings.back),
                         ),
                       ),
+                      const SizedBox(width: 16,),
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () {
                             _updateInfo();
                           },
-                          child: Text('Next'),
+                          child: const Text(Strings.next),
                         ),
                       ),
                     ],

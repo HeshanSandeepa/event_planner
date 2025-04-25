@@ -9,7 +9,7 @@ final class LoadingView extends StatelessWidget {
     super.key,
     this.size = 20,
     this.strokeWidth = 2,
-    this.strokeColor = Colors.white,
+    this.strokeColor = Colors.black,
   });
 
   @override

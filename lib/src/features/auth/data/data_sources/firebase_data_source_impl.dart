@@ -21,7 +21,7 @@ class FirebaseDataSourceImpl implements FirebaseDataSource {
       return credential.user != null
           ? UserModel(uid: credential.user!.uid, email: credential.user!.email)
           : null;
-    } on firebase_auth.FirebaseAuthException catch (e) {
+    } on firebase_auth.FirebaseAuthException {
       rethrow;
     } catch (e) {
       rethrow;
@@ -41,7 +41,7 @@ class FirebaseDataSourceImpl implements FirebaseDataSource {
       return credential.user != null
           ? UserModel(uid: credential.user!.uid, email: credential.user!.email)
           : null;
-    } on firebase_auth.FirebaseAuthException catch (e) {
+    } on firebase_auth.FirebaseAuthException {
       rethrow;
     } catch (e) {
       rethrow;
