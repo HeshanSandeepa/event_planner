@@ -93,25 +93,26 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                               ),
                             )
-                          : Stack(
-                              children: [
-                                CircleAvatar(
-                                  radius: 100,
-                                  backgroundImage: Image.file(
-                                    File(imagePath!),
-                                    width: 200,
-                                    height: 200,
-                                    fit: BoxFit.cover,
-                                  ).image,
-                                ),
-                                if (editEnabled)
+                          : Center(
+                              child: Stack(
+                                children: [
+                                  CircleAvatar(
+                                    radius: 100,
+                                    backgroundImage: Image.file(
+                                      File(imagePath!),
+                                      width: 200,
+                                      height: 200,
+                                      fit: BoxFit.cover,
+                                    ).image,
+                                  ),
                                   IconButton(
                                     onPressed: () {
                                       _takePicture();
                                     },
                                     icon: const Icon(Icons.camera_alt_outlined),
                                   ),
-                              ],
+                                ],
+                              ),
                             ),
                     ),
                   ),

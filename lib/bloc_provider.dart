@@ -134,6 +134,10 @@ List<SingleChildWidget> createBlocProviders(BuildContext context) {
       create: (context) =>
           PostBloc(getPostUseCase: context.read<GetPostUseCase>()),
     ),
+    Provider<GetCommentUseCase>(
+      create: (context) =>
+          GetCommentUseCase(repository: context.read<CommentRepository>()),
+    ),
     BlocProvider<CommentBloc>(
       create: (context) =>
           CommentBloc(getCommentUseCase: context.read<GetCommentUseCase>()),

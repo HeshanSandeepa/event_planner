@@ -39,9 +39,18 @@ abstract final class Strings {
   // posts
   static const posts = "Posts";
 
+  // comments
+  static const postComments = "Post Comments";
 
+
+  //errors
   static const invalidEmail = "Invalid Email";
   static const invalidPassword = "Invalid Password";
   static const invalidText = "Invalid Text";
   static const invalidPhone = "Invalid Phone";
+  static const errorComments = 'fetchComments error';
+  static const errorOrganisers = 'fetchOrganisers error';
+  static const errorPosts = 'fetchPosts error';
+  static const errorPhotos = 'fetchPhotos error';
+
 }

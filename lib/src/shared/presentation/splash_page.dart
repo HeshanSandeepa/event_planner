@@ -22,11 +22,13 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   _pushLogin(BuildContext context) {
-    Navigator.pushNamed(context, AppRouteEnum.loginPage.name);
+    Navigator.pushNamedAndRemoveUntil(
+        context, AppRouteEnum.loginPage.name, (Route<dynamic> route) => false);
   }
 
   _pushHome(BuildContext context) {
-    Navigator.pushNamed(context, AppRouteEnum.homePage.name);
+    Navigator.pushNamedAndRemoveUntil(
+        context, AppRouteEnum.homePage.name, (Route<dynamic> route) => false);
   }
 
   _getCurrentUser(BuildContext context) {
@@ -45,10 +47,12 @@ class _SplashPageState extends State<SplashPage> {
               _pushLogin(context);
             }
           },
-          child: Text(
-            Strings.welcome,
-            style: Theme.of(context).textTheme.headlineLarge,
-            textAlign: TextAlign.center,
+          child: Center(
+            child: Text(
+              Strings.welcome,
+              style: Theme.of(context).textTheme.headlineLarge,
+              textAlign: TextAlign.center,
+            ),
           )),
     );
   }

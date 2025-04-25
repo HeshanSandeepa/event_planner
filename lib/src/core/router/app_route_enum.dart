@@ -6,6 +6,7 @@ enum AppRouteEnum {
   welcomePage,
   postPage,
   homePage,
+  commentPage,
 }
 
 extension AppRouteExtension on AppRouteEnum {
@@ -28,6 +29,9 @@ extension AppRouteExtension on AppRouteEnum {
 
       case AppRouteEnum.postPage:
         return "/post";
+
+      case AppRouteEnum.commentPage:
+        return "/comments";
 
       default:
         return "/home";

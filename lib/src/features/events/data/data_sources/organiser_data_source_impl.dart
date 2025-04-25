@@ -1,6 +1,7 @@
 import 'package:event_planner/src/features/events/data/models/organiser_model.dart';
 import 'package:event_planner/src/core/network/net.dart';
 
+import '../../../../core/utils/strings.dart';
 import 'organiser_data_source.dart';
 
 class OrganiserDataSourceImpl implements OrganiserDataSource {
@@ -18,7 +19,7 @@ class OrganiserDataSourceImpl implements OrganiserDataSource {
             jsonList.map((json) => OrganiserModel.fromJson(json)).toList();
         return organisers;
       } else {
-        throw const GenericException(message: 'fetchOrganisers error');
+        throw const GenericException(message: Strings.errorOrganisers);
       }
     } catch (e) {
       rethrow;

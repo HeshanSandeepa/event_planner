@@ -29,14 +29,11 @@ class _DrawerViewState extends State<DrawerView> {
     BlocProvider.of<AuthenticateBloc>(context).add(GetCurrentUserRequested());
   }
 
-  _pushProfile() {
-    Navigator.pushNamed(context, AppRouteEnum.profilePage.name);
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
+        width: 400,
         color: Colors.white,
         child: BlocBuilder<AuthenticateBloc, AuthenticateState>(
           builder: (context, state) {
@@ -59,13 +56,15 @@ class _DrawerViewState extends State<DrawerView> {
                         clipBehavior: Clip.antiAlias,
                         child: userEntity == null
                             ? Container()
-                            : Image.file(
-                                File(userEntity!.photoUrl!),
-                                width: 100,
-                                height: 100,
-                                fit: BoxFit
-                                    .cover, // How the image should be inscribed in the box.
-                              ),
+                            : CircleAvatar(
+                                radius: 50,
+                                backgroundImage: Image.file(
+                                  File(userEntity!.photoUrl!),
+                                  width: 100,
+                                  height: 100,
+                                  fit: BoxFit
+                                      .cover, // How the image should be inscribed in the box.
+                                ).image),
                       ),
                     ),
                     Expanded(

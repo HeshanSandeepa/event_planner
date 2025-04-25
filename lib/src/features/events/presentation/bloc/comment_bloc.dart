@@ -20,7 +20,7 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
   ) async {
     emit(CommentLoading());
     try {
-      final result = await getCommentUseCase.execute();
+      final result = await getCommentUseCase.execute(event.postId);
       emit(CommentFetched(comments: result));
     } catch (error) {
       emit(CommentError(message: error.toString()));

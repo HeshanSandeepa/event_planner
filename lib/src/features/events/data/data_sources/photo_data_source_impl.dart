@@ -1,5 +1,6 @@
 import 'package:event_planner/src/features/events/data/data_sources/photo_data_source.dart';
 import 'package:event_planner/src/core/network/net.dart';
+import '../../../../core/utils/strings.dart';
 import '../models/photo_model.dart';
 
 class PhotoDataSourceImpl implements PhotoDataSource {
@@ -17,7 +18,7 @@ class PhotoDataSourceImpl implements PhotoDataSource {
             jsonList.map((json) => PhotoModel.fromJson(json)).toList();
         return photos;
       } else {
-        throw const GenericException(message: 'fetchPhotos error');
+        throw const GenericException(message: Strings.errorPhotos);
       }
     } catch (e) {
       rethrow;

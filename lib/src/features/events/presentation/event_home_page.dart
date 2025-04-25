@@ -55,7 +55,8 @@ class _EventHomePageState extends State<EventHomePage> {
               },
               builder: (context, state) {
                 if (state is PhotoLoading) {
-                  return const LoadingView(strokeColor: Colors.black);
+                  return const Expanded(
+                      child: LoadingView(strokeColor: Colors.black));
                 }
                 if (state is PhotoError) {
                   return NoticeView(notice: state.message);
@@ -73,9 +74,6 @@ class _EventHomePageState extends State<EventHomePage> {
                 _fetchPosts();
               },
               builder: (context, state) {
-                if (state is OrganiserLoading) {
-                  return const LoadingView(strokeColor: Colors.black);
-                }
                 if (state is OrganiserError) {
                   return NoticeView(notice: state.message);
                 }
@@ -89,9 +87,6 @@ class _EventHomePageState extends State<EventHomePage> {
             BlocConsumer<PhotoBloc, PhotoState>(
               listener: (context, state) {},
               builder: (context, state) {
-                if (state is PhotoLoading) {
-                  return const LoadingView(strokeColor: Colors.black);
-                }
                 if (state is PhotoError) {
                   return NoticeView(notice: state.message);
                 }
@@ -105,9 +100,6 @@ class _EventHomePageState extends State<EventHomePage> {
             BlocConsumer<PostBloc, PostState>(
               listener: (context, state) {},
               builder: (context, state) {
-                if (state is PostLoading) {
-                  return const LoadingView(strokeColor: Colors.black);
-                }
                 if (state is PostsError) {
                   return NoticeView(notice: state.message);
                 }

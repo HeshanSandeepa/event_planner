@@ -2,6 +2,8 @@ import 'package:event_planner/src/features/events/data/data_sources/post_data_so
 import 'package:event_planner/src/features/events/data/models/post_model.dart';
 import 'package:event_planner/src/core/network/net.dart';
 
+import '../../../../core/utils/strings.dart';
+
 class PostDataSourceImpl implements PostDataSource {
   final DioClient dioClient;
 
@@ -17,7 +19,7 @@ class PostDataSourceImpl implements PostDataSource {
             jsonList.map((json) => PostModel.fromJson(json)).toList();
         return posts;
       } else {
-        throw const GenericException(message: 'fetchPosts error');
+        throw const GenericException(message: Strings.errorPosts);
       }
     } catch (e) {
       rethrow;

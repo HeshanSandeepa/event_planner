@@ -8,7 +8,7 @@ class CommentRepositoryImpl implements CommentRepository {
   CommentRepositoryImpl({required this.remoteDataSource});
 
   @override
-  Future<List<CommentModel>> getComments() async {
-    return await remoteDataSource.fetchComments();
+  Future<List<CommentModel>> getComments(int postId) async {
+    return await remoteDataSource.fetchComments(postId);
   }
 }

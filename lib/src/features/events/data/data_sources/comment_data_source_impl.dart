@@ -1,8 +1,7 @@
-import 'dart:convert';
-
 import 'package:event_planner/src/core/network/net.dart';
 import 'package:event_planner/src/features/events/data/models/comment_model.dart';
 
+import '../../../../core/utils/strings.dart';
 import 'comment_data_source.dart';
 
 class CommentDataSourceImpl implements CommentDataSource {
@@ -11,18 +10,19 @@ class CommentDataSourceImpl implements CommentDataSource {
   CommentDataSourceImpl({required this.dioClient});
 
   @override
-  Future<List<CommentModel>> fetchComments() async {
+  Future<List<CommentModel>> fetchComments(int postId) async {
     try {
-      final response = await dioClient.dio().get(EndPoint.comments.getApi);
-      final jsonResponse = jsonDecode(response.toString());
+      final response =
+          await dioClient.dio().get('${EndPoint.comments.getApi}$postId');
 
-      if ('200' != jsonResponse['code'].toString()) {
-        throw GenericException(message: 'fetchComments error');
+      if (response.statusCode == 200) {
+        List<dynamic> jsonList = response.data;
+        List<CommentModel> commentList =
+            jsonList.map((json) => CommentModel.fromJson(json)).toList();
+        return commentList;
+      } else {
+        throw const GenericException(message: Strings.errorComments);
       }
-      var photoList = jsonResponse as List;
-      return photoList
-          .map<CommentModel>((i) => CommentModel.fromJson(i))
-          .toList();
     } catch (e) {
       rethrow;
     }

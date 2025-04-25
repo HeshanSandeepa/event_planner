@@ -20,7 +20,7 @@ extension EndPointExtension on EndPoint {
         break;
 
       case EndPoint.comments:
-        api = 'comments';
+        api = 'comments?postId=';
         break;
     }
     return '${Env.base}$api';

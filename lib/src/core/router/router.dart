@@ -1,3 +1,4 @@
+import 'package:event_planner/src/features/events/presentation/post_comment_page.dart';
 import 'package:flutter/material.dart';
 import 'package:event_planner/src/shared/presentation/home_page.dart';
 import 'package:event_planner/src/features/auth/presentation/info_page.dart';
@@ -61,15 +62,25 @@ class AppRouter {
           },
         );
 
+      case '/comments':
+        return MaterialPageRoute(
+          settings: RouteSettings(name: settings.name),
+          builder: (_) {
+            Map<String, dynamic>? args =
+                settings.arguments as Map<String, dynamic>?;
+            assert(args != null, "posts can not be null");
+            return PostCommentPage(postId: args!['post_id']);
+          },
+        );
+
       default:
         return MaterialPageRoute(
           settings: RouteSettings(name: settings.name),
-          builder:
-              (_) => Scaffold(
-                body: Center(
-                  child: Text('No route defined for ${settings.name}'),
-                ),
-              ),
+          builder: (_) => Scaffold(
+            body: Center(
+              child: Text('No route defined for ${settings.name}'),
+            ),
+          ),
         );
     }
   }
