@@ -1,16 +1,24 @@
 # event_planner
 
-A new Flutter project.
+Flutter technical assignment
 
-## Getting Started
+## setting up and running the project
 
-This project is a starting point for a Flutter application.
+Open the project in  IDE, run flutter pub get
 
-A few resources to get you started if this is your first Flutter project:
+## Brief description of the project
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Sample application demonstrate core components of Flutter development
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Technologies used
+
+Flutter, Dart, Bloc, Dio, GetIt, FirebaseAuth
+
+## known issues or limitations
+
+1. Pagination has been added on lists.
+2. Re-creational bugs on logout, profile edit.
+3. Address component doesn't work as intended.
+   (Firebase Auth used instead FireStore for profile data persistence)
+4. FCM hasn't been integrated.
+5. Simple UI.
