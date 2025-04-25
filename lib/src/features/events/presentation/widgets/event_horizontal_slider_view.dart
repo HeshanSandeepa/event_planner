@@ -1,3 +1,4 @@
+import 'package:event_planner/src/core/utils/strings.dart';
 import 'package:flutter/material.dart';
 
 import '../../data/models/photo_model.dart';
@@ -9,53 +10,84 @@ class EventHorizontalSliderView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          height: 50,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text('Photos', style: Theme.of(context).textTheme.bodyLarge),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.arrow_forward, color: Colors.black),
+    return SizedBox(
+      height: 360,
+      child: Column(
+        children: [
+          SizedBox(
+            height: 60,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(Strings.photos,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyLarge
+                          ?.copyWith(fontWeight: FontWeight.bold)),
+                  TextButton.icon(
+                    onPressed: () {},
+                    iconAlignment: IconAlignment.end,
+                    label: const Text(
+                      Strings.allPhotos,
+                    ),
+                    icon: const Icon(
+                      Icons.arrow_forward,
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-        SizedBox(
-          height: 400,
-          width: 600,
-          child: PageView.builder(
-            itemCount: sliderImages.length,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
+          SizedBox(
+            height: 300,
+            child: PageView.builder(
+              itemCount: sliderImages.length,
+              itemBuilder: (context, index) {
+                return Column(
                   children: [
                     Expanded(
-                      child: Image.network(
-                        'https://picsum.photos/seed/picsum/400/500.jpg' /*sliderImages[index].url*/,
-                        fit: BoxFit.fitWidth,
+                      child: Container(
+                        color: Colors.red,
+                        child: Image.network(
+                          'https://picsum.photos/seed/picsum/1000/300.jpg',
+                          /*sliderImages[index].url*/
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
-                    Text(
-                      sliderImages[index].title,
-                      style: Theme.of(context).textTheme.bodyLarge,
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            sliderImages[index].title,
+                            textAlign: TextAlign.start,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge
+                                ?.copyWith(fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            sliderImages[index].thumbnailUrl,
+                            textAlign: TextAlign.start,
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        ],
+                      ),
                     ),
-                    Text(
-                      sliderImages[index].thumbnailUrl,
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
+                    const Divider(),
                   ],
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

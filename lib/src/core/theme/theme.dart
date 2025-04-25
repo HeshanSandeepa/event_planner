@@ -54,6 +54,44 @@ final class EventTheme {
           ),
         ),
       ),
+      textButtonTheme: TextButtonThemeData(
+        style: ButtonStyle(
+          // Default color for text and icon
+          foregroundColor: WidgetStateProperty.resolveWith<Color?>(
+            (Set<WidgetState> states) {
+              if (states.contains(WidgetState.disabled)) {
+                return Colors.grey; // Disabled color
+              }
+              return AppColor.themeColor; // Default enabled color
+            },
+          ),
+          iconSize: WidgetStateProperty.all(22.0), // Slightly larger icon
+
+          // Default text style
+          textStyle: WidgetStateProperty.all<TextStyle>(
+            const TextStyle(
+              fontSize: 16,
+              color: AppColor.themeColor,
+              fontWeight: FontWeight.w600, // Bold text
+            ),
+          ),
+          padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+            const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+          ),
+
+          overlayColor: WidgetStateProperty.resolveWith<Color?>(
+            (Set<WidgetState> states) {
+              if (states.contains(WidgetState.pressed)) {
+                return Colors.deepPurple.withOpacity(0.2);
+              }
+              if (states.contains(WidgetState.hovered)) {
+                return Colors.deepPurple.withOpacity(0.1);
+              }
+              return null; // Defer to default splash radius/effect
+            },
+          ),
+        ),
+      ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
           backgroundColor: WidgetStateProperty.all<Color>(AppColor.themeColor),
@@ -63,10 +101,10 @@ final class EventTheme {
           elevation: WidgetStateProperty.all<double>(8),
           textStyle: WidgetStateProperty.all<TextStyle>(
             Theme.of(context).textTheme.bodyMedium!.copyWith(
-              fontWeight: FontWeight.w400,
-              color: Colors.white,
-              overflow: TextOverflow.clip,
-            ),
+                  fontWeight: FontWeight.w400,
+                  color: Colors.white,
+                  overflow: TextOverflow.clip,
+                ),
           ),
         ),
       ),

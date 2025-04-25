@@ -1,3 +1,4 @@
+import 'package:event_planner/src/core/theme/color.dart';
 import 'package:flutter/material.dart';
 
 import '../../data/models/photo_model.dart';
@@ -35,7 +36,7 @@ class _EventSliderViewState extends State<EventSliderView> {
   _setPageIndex() {
     setState(() {
       _currentPage =
-          '${_controller.page?.round() ?? 0} / ${widget.sliderImages.length}';
+          '${_controller.page!.round() + 1} / ${widget.sliderImages.length}';
     });
   }
 
@@ -66,7 +67,20 @@ class _EventSliderViewState extends State<EventSliderView> {
             },
           ),
         ),
-        Positioned(bottom: 16, right: 16, child: Text(_currentPage)),
+        Positioned(
+            bottom: 16,
+            right: 16,
+            child: Container(
+                color: AppColor.backgroundColor,
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Text(
+                    _currentPage,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                ))),
       ],
     );
   }

@@ -27,6 +27,16 @@ abstract final class Strings {
   static const hintGmail = 'Email';
   static const hintAddress = 'Address';
 
+  // home
+  static const eventNameHolder = "Event Name";
+  static const eventName = "Summer Garden Event";
+  static const photos = 'Photos';
+  static const allPhotos = 'AllPhotos';
+
+  // posts
+  static const posts = "Posts";
+
+
   static const invalidEmail = "Invalid Email";
   static const invalidPassword = "Invalid Password";
   static const invalidText = "Invalid Text";

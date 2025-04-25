@@ -1,3 +1,4 @@
+import 'package:event_planner/src/core/theme/color.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/router/app_route_enum.dart';
@@ -23,12 +24,14 @@ class EventPostsCountView extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
               '${posts.length} ',
               style: Theme.of(
                 context,
-              ).textTheme.headlineLarge?.copyWith(fontWeight: FontWeight.bold),
+              ).textTheme.headlineLarge?.copyWith(fontWeight: FontWeight.bold, color: AppColor.themeColor),
               softWrap: false,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
