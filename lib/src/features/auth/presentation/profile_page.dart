@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:event_planner/src/features/auth/presentation/bloc/profile_bloc.dart';
 
 import '../../../core/router/app_route_enum.dart';
+import '../../../core/utils/strings.dart';
 import '../../../shared/camera/presentation/camera_bloc.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -22,6 +23,7 @@ class _ProfilePageState extends State<ProfilePage> {
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
   final _phoneNumberController = TextEditingController();
+  final _emailController = TextEditingController();
   final _addressController = TextEditingController();
 
   @override
@@ -48,7 +50,6 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(editEnabled ? 'Edit Profile' : 'Profile')),
       body: BlocConsumer<ProfileBloc, ProfileState>(
         listener: (context, state) {
           if (state is ProfileUpdated) {
@@ -62,106 +63,110 @@ class _ProfilePageState extends State<ProfilePage> {
             imagePath = user.photoUrl;
             _firstNameController.text = user.firstName ?? '';
             _lastNameController.text = user.lastName ?? '';
+            _emailController.text = user.email ?? '';
             _phoneNumberController.text = user.contactNumber ?? '';
             _addressController.text = user.contactNumber ?? '';
           }
 
           return Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Material(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Center(
+                    child: Material(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      clipBehavior: Clip.antiAlias,
+                      child: imagePath == null
+                          ? Center(
+                              child: Container(
+                                width: 200,
+                                height: 200,
+                                decoration: BoxDecoration(
+                                  color: Colors.red.shade100,
+                                  shape: BoxShape.circle,
+                                ),
+                              ),
+                            )
+                          : Stack(
+                              children: [
+                                CircleAvatar(
+                                  radius: 100,
+                                  backgroundImage: Image.file(
+                                    File(imagePath!),
+                                    width: 200,
+                                    height: 200,
+                                    fit: BoxFit.cover,
+                                  ).image,
+                                ),
+                                if (editEnabled)
+                                  IconButton(
+                                    onPressed: () {
+                                      _takePicture();
+                                    },
+                                    icon: const Icon(Icons.camera_alt_outlined),
+                                  ),
+                              ],
+                            ),
+                    ),
                   ),
-                  clipBehavior: Clip.antiAlias,
-                  child: imagePath == null
-                      ? Center(
-                          child: Container(
-                            width: 200,
-                            height: 200,
-                            decoration: BoxDecoration(
-                              color: Colors.red.shade100,
-                              shape: BoxShape.circle,
-                            ),
+                  const SizedBox(height: 16),
+                  TextField(
+                    controller: _firstNameController,
+                    decoration:
+                        const InputDecoration(labelText: Strings.hintFirstName),
+                  ),
+                  const SizedBox(height: 16),
+                  TextField(
+                    controller: _lastNameController,
+                    decoration:
+                        const InputDecoration(labelText: Strings.hintLastName),
+                  ),
+                  const SizedBox(height: 16),
+                  TextField(
+                    controller: _emailController,
+                    decoration:
+                        const InputDecoration(labelText: Strings.hintEmail),
+                  ),
+                  const SizedBox(height: 16),
+                  TextField(
+                    controller: _phoneNumberController,
+                    decoration:
+                        const InputDecoration(labelText: Strings.hintPhone),
+                  ),
+                  const SizedBox(height: 16),
+                  TextField(
+                    controller: _addressController,
+                    decoration:
+                        const InputDecoration(labelText: Strings.hintAddress),
+                  ),
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (editEnabled) {
+                        BlocProvider.of<ProfileBloc>(context).add(
+                          UpdateProfile(
+                            firstName: _firstNameController.text.trim(),
+                            lastName: _lastNameController.text.trim(),
+                            contactNumber: _phoneNumberController.text.trim(),
+                            address: _addressController.text.trim(),
                           ),
-                        )
-                      : Stack(
-                          children: [
-                            Image.file(
-                              File(imagePath!),
-                              width: 200,
-                              height: 200,
-                              fit: BoxFit.cover,
-                            ),
-                            if (editEnabled)
-                              IconButton(
-                                onPressed: () {
-                                  _takePicture();
-                                },
-                                icon: const Icon(Icons.camera_alt_outlined),
-                              ),
-                          ],
-                        ),
-                ),
-                TextField(
-                  controller: _firstNameController,
-                  decoration: const InputDecoration(labelText: 'First Name'),
-                ),
-                const SizedBox(height: 16),
-                TextField(
-                  controller: _lastNameController,
-                  decoration: const InputDecoration(labelText: 'Last Name'),
-                ),
-                const SizedBox(height: 24),
-                TextField(
-                  controller: _phoneNumberController,
-                  decoration: const InputDecoration(labelText: 'Phone Number'),
-                ),
-                const SizedBox(height: 16),
-                TextField(
-                  controller: _addressController,
-                  decoration: const InputDecoration(labelText: 'Address'),
-                ),
-                const SizedBox(height: 24),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Text('Back'),
-                      ),
-                    ),
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          if (editEnabled) {
-                            BlocProvider.of<ProfileBloc>(context).add(
-                              UpdateProfile(
-                                firstName: _firstNameController.text.trim(),
-                                lastName: _lastNameController.text.trim(),
-                                contactNumber:
-                                    _phoneNumberController.text.trim(),
-                                address: _addressController.text.trim(),
-                              ),
-                            );
-                          } else {
-                            setState(() {
-                              editEnabled = true;
-                            });
-                          }
-                        },
-                        child: Text(editEnabled ? 'Save' : 'Edit'),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+                        );
+                      } else {
+                        setState(() {
+                          editEnabled = true;
+                        });
+                      }
+                    },
+                    child: Text(editEnabled ? 'Save' : 'Edit'),
+                  ),
+                ],
+              ),
             ),
           );
         },

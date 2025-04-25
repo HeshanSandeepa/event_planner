@@ -25,6 +25,18 @@ final class EventTheme {
         cursorColor: Colors.black,
         selectionColor: Colors.grey,
       ),
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        backgroundColor: Colors.grey[200],
+        selectedItemColor: AppColor.themeColor,
+        unselectedItemColor: Colors.black,
+        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
+        unselectedLabelStyle: const TextStyle(fontStyle: FontStyle.italic),
+        showSelectedLabels: true,
+        showUnselectedLabels: false,
+        type: BottomNavigationBarType
+            .fixed, // Or BottomNavigationBarType.shifting
+        elevation: 8.0,
+      ),
       textTheme: GoogleFonts.poppinsTextTheme(
         const TextTheme(
           headlineLarge: TextStyle(

@@ -28,6 +28,9 @@ abstract final class Strings {
   static const hintAddress = 'Address';
 
   // home
+
+  static const tabHome = "Home";
+  static const tabProfile = "Profile";
   static const eventNameHolder = "Event Name";
   static const eventName = "Summer Garden Event";
   static const photos = 'Photos';

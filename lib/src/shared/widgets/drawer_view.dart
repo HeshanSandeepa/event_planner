@@ -57,17 +57,15 @@ class _DrawerViewState extends State<DrawerView> {
                           borderRadius: BorderRadius.circular(8),
                         ),
                         clipBehavior: Clip.antiAlias,
-                        child:
-                            userEntity == null
-                                ? Container()
-                                : Image.file(
-                                  File(userEntity!.photoUrl!),
-                                  width: 100,
-                                  height: 100,
-                                  fit:
-                                      BoxFit
-                                          .cover, // How the image should be inscribed in the box.
-                                ),
+                        child: userEntity == null
+                            ? Container()
+                            : Image.file(
+                                File(userEntity!.photoUrl!),
+                                width: 100,
+                                height: 100,
+                                fit: BoxFit
+                                    .cover, // How the image should be inscribed in the box.
+                              ),
                       ),
                     ),
                     Expanded(
@@ -86,20 +84,24 @@ class _DrawerViewState extends State<DrawerView> {
                             style: Theme.of(
                               context,
                             ).textTheme.bodyLarge?.copyWith(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
                           ),
                           Text(
                             userEntity?.contactNumber ?? '',
                             textAlign: TextAlign.start,
-                            style: Theme.of(context).textTheme.bodyMedium
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
                                 ?.copyWith(color: Colors.black),
                           ),
                           Text(
                             userEntity?.email ?? '',
                             textAlign: TextAlign.start,
-                            style: Theme.of(context).textTheme.bodyMedium
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
                                 ?.copyWith(color: Colors.black),
                           ),
                         ],
@@ -116,28 +118,8 @@ class _DrawerViewState extends State<DrawerView> {
                         color: Colors.white,
                         shape: BoxShape.circle,
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Icon(Icons.edit, size: 20, color: Colors.black),
-                      ),
-                    ),
-                    title: Text('Profile'),
-                    onTap: () {
-                      _pushProfile();
-                    },
-                  ),
-                ),
-                Container(
-                  color: Colors.white,
-                  child: ListTile(
-                    contentPadding: const EdgeInsets.all(16),
-                    leading: Container(
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(12.0),
+                      child: const Padding(
+                        padding: EdgeInsets.all(12.0),
                         child: Icon(
                           Icons.logout,
                           size: 20,
@@ -145,7 +127,7 @@ class _DrawerViewState extends State<DrawerView> {
                         ),
                       ),
                     ),
-                    title: Text('LogOut'),
+                    title: const Text('LogOut'),
                     onTap: () {
                       BlocProvider.of<AuthenticateBloc>(
                         context,
